@@ -28,6 +28,9 @@ void createStation(char *);
 void createHubThreads();
 void *listenTran(void *);
 
+/* Temporary */
+int pipeCounter = 0;
+
 /*-------------------------------------------------------------
 Function: main
 Parameters:
@@ -87,17 +90,51 @@ void createStation(char *fileConfig)
 	
         /* To be completed - create pipes and station process */
 	int pid;
+	int tranPipeFds[2];
+	int recPipeFds[2];
+	int pipeStatus;
+	
+	pipeStatus = pipe(tranPipeFds);
+	if (pipeStatus == -1){
+		fprintf(stderr, "Transmission pipe creation failed.");
+		exit(-1);
+	}
+	pipeStatus = pipe(recPipeFds);
+	if (pipeStatus == -1){
+		fprintf(stderr, "Reception pipe creation failed.");
+		exit(-1);
+	}
+	
     pid = fork(); /* fork another process */
     if (pid < 0){
         fprintf(stderr, "Fork Failed");
         exit(-1); /* fork failed */
     } else if (pid == 0) { /* child process */
+		//attach std out,1, fds to write end [1] of tran pipe, close read end fds to tran pip
+		//dup close stdout fds to parent process
+		dup2(tranPipeFds[1],1);
+		close(tranPipeFds[0]);
+		//attach std in,0, fds to read end of [0] rec pipe, close write end fds to rec pipe
+		//dup closes stdin fds to parent proces
+		dup2(recPipeFds[0], 0);
+		close(recPipeFds[1]);
 		int i = execlp("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stn", PROGRAM_STN, fileConfig, NULL);
+		//i will only be assigned a value if this call fails (i.e. -1)
 		printf("%d\n", i);
     } else {
+		//store read end of tran pipe [0] in fdsTran(at its end)
+		fdsTran[pipeCounter] = tranPipeFds[0];
+		//IS THIS NECESSARY???
+		close(tranPipeFds[1]);
+		//store write end of rec pipe [1] in fdsRec(at its end)
+		fdsRec[pipeCounter] = recPipeFds[1];
+		//IS THIS NECESSARY???
+		close(recPipeFds[0]);
+		pipeCounter = pipeCounter + 1;
+		fprintf(stderr, "Initialized pipes for stn %d\n", pipeCounter);
+		// wait(NULL);
 		//Debugging
-		// printf("%d\n", pid);
-        wait(NULL);
+
 		
 
     }
