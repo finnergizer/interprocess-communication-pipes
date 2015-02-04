@@ -11,6 +11,8 @@ Description:  This program creates the station processes
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define OK 1
 #define PROGRAM_STN "stn"  // The program that acts like a station
@@ -45,10 +47,10 @@ int main(int ac, char **av)
    fdsTran[0] = -1; // empty list
    
    // Creating the stations
-   createStation("stnA.cfg");
-   createStation("stnB.cfg");
-   createStation("stnC.cfg");
-   createStation("stnD.cfg");
+   createStation("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stnA.cfg");
+   createStation("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stnB.cfg");
+   createStation("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stnC.cfg");
+   createStation("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stnD.cfg");
 
    // creating threads for the hub
    createHubThreads();  
@@ -90,9 +92,13 @@ void createStation(char *fileConfig)
         fprintf(stderr, "Fork Failed");
         exit(-1); /* fork failed */
     } else if (pid == 0) { /* child process */
-
+		int i = execlp("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stn", PROGRAM_STN, fileConfig, NULL);
+		printf("%d\n", i);
     } else {
+		//Debugging
+		// printf("%d\n", pid);
         wait(NULL);
+		
 
     }
 

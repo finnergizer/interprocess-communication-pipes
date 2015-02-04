@@ -1,0 +1,19 @@
+approach:
+when creating stations; duplicate process 4 times; if child process, then modify pipes to be pointed at appropriate locations; if parent, point read and transmission pairs to appropriate pipe endpoints;
+
+use stn() in child process, map stdin and stdout appropriately
+
+createStation
+===============
+fork, then call exec
+
+4 processes are created in the createStations; 4 pipes to manage the transmission from stn to hub
+NOT SURE ABOUT THIS??????4 threads are created to transmit the messages; 4 pipes to manage the transmission from hub to all stn
+
+
+fdsRec is the fdescriptor used by the station to receive messages... (i.e. standard in)
+fdsTran is the fdescripter used by the station to transmit messages...
+See listenTran
+We have 8 pipes
+
+each station will have two pipes managed by a single thread
