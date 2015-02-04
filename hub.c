@@ -153,13 +153,23 @@ void createHubThreads()
 {
 
         /* To be completed - create the four threads  */
+	pthread_t tid[pipeCounter];
+	pthread_attr_t attr;
 
-   // Sleep a bit
-   sleep(30);
+	// pthread_init_attr(&attr);
+	for (int i = 0; i<pipeCounter; i++){
+		// pthread_create(&tid[i], &attr, listenTran, &fdsTran[i]);
+		pthread_create(&tid[i], NULL, listenTran, &fdsTran[i]);
+	}
+	// Sleep a bit
+	sleep(30);
+	for (int i=0; i<pipeCounter; i++){
+		pthread_cancel(tid[i]);
+	}
 
-   // Cancel the threads
+	// Cancel the threads
 
-        /* To be completed - have the four threads terminate */
+	    /* To be completed - have the four threads terminate */
 }
 
 /*-------------------------------------------------------------------
