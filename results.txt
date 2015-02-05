@@ -1,0 +1,18 @@
+Initialized pipes for stn 1
+Initialized pipes for stn 2
+Initialized pipes for stn 3
+Initialized pipes for stn 4
+Station A (5964): Sent to station C >Hello station C<
+Station B (5965): Sent to station D >Hello station D, it's me station B<
+Station D (5967): Sent to station A >Message a <
+Station C (5966): Sent to station A >Message 1<
+Station D (5967): Received from station B >Hello station D, it's me station B<
+Station A (5964): Received from station D >Message a <
+Station A (5964): Received from station C >Message 1<
+Station D (5967): Received from station B >Hello station D, it's me station B<
+Station D (5967): Received from station A an acknowledgement
+Station D (5967): Sent to station A >Message b<
+Station B (5965): Received from station D an acknowledgement
+Station B (5965): Sent to station D >Thanks for your acknowldgement<
+Station D (5967): Received from station B >Thanks for your acknowldgement<
+Station A (5964): Received from station D >Message b<

@@ -39,6 +39,7 @@ receives a messages, it reponds by returning an acknowledgement.
 #define MSG_EMPTY 3
 #define MSG_RECV 4
 
+#define BUFSIZE 100
 // Prototypes
 void readFile(FILE *, char *, char *, char *[], char *);
 void communication(char, char, char *[]);

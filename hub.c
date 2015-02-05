@@ -17,6 +17,7 @@ Description:  This program creates the station processes
 #define OK 1
 #define PROGRAM_STN "stn"  // The program that acts like a station
 #define MAX_STNS 10        // Maximum number of stations
+#define BUFSIZE 100
 // Note that the terms reception and transmission are relatif to the station and not the hub
 // Note that the descriptors at the same index in the two arrays are related to the same station,
 // for example, fdsRec[2] and fdsTran[2] contain the fds of the pipes connected to the same station.
@@ -114,22 +115,34 @@ void createStation(char *fileConfig)
 		//dup close stdout fds to parent process
 		dup2(tranPipeFds[1],1);
 		close(tranPipeFds[0]);
+		close(tranPipeFds[1]);
 		//attach std in,0, fds to read end of [0] rec pipe, close write end fds to rec pipe
 		//dup closes stdin fds to parent proces
 		dup2(recPipeFds[0], 0);
 		close(recPipeFds[1]);
+		close(recPipeFds[0]);
 		int i = execlp("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stn", PROGRAM_STN, fileConfig, NULL);
 		//i will only be assigned a value if this call fails (i.e. -1)
 		printf("%d\n", i);
     } else {
 		//store read end of tran pipe [0] in fdsTran(at its end)
+		// dup2(tranPipeFds[0], fdsTran[pipeCounter]);
+		// dup2(fdsTran[pipeCounter], tranPipeFds[0]);
 		fdsTran[pipeCounter] = tranPipeFds[0];
 		//IS THIS NECESSARY???
-		close(tranPipeFds[1]);
+		// close(tranPipeFds[1]);
+		// close(tranPipeFds[0]);
+		// tranPipeFds[1] = -1;
+		// tranPipeFds[0] = -1;
 		//store write end of rec pipe [1] in fdsRec(at its end)
+		// dup2(recPipeFds[1], fdsRec[pipeCounter]);
+		// dup2(fdsRec[pipeCounter], recPipeFds[1]);
 		fdsRec[pipeCounter] = recPipeFds[1];
 		//IS THIS NECESSARY???
-		close(recPipeFds[0]);
+		// close(recPipeFds[0]);
+		// close(recPipeFds[1]);
+		// recPipeFds[0] = -1;
+		// recPipeFds[1] = -1;
 		pipeCounter = pipeCounter + 1;
 		fprintf(stderr, "Initialized pipes for stn %d\n", pipeCounter);
 		// wait(NULL);
@@ -161,7 +174,9 @@ void createHubThreads()
 		// pthread_create(&tid[i], &attr, listenTran, &fdsTran[i]);
 		pthread_create(&tid[i], NULL, listenTran, &fdsTran[i]);
 	}
-	// Sleep a bit
+	// for(int i=0; i<6; i++) /* now wait until everybody finishes */
+	// 	pthread_join(tid[i], NULL);
+	//
 	sleep(30);
 	for (int i=0; i<pipeCounter; i++){
 		pthread_cancel(tid[i]);
