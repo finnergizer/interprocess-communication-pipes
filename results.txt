@@ -1,18 +1,48 @@
-Initialized pipes for stn 1
-Initialized pipes for stn 2
-Initialized pipes for stn 3
-Initialized pipes for stn 4
-Station A (5964): Sent to station C >Hello station C<
-Station B (5965): Sent to station D >Hello station D, it's me station B<
-Station D (5967): Sent to station A >Message a <
-Station C (5966): Sent to station A >Message 1<
-Station D (5967): Received from station B >Hello station D, it's me station B<
-Station A (5964): Received from station D >Message a <
-Station A (5964): Received from station C >Message 1<
-Station D (5967): Received from station B >Hello station D, it's me station B<
-Station D (5967): Received from station A an acknowledgement
-Station D (5967): Sent to station A >Message b<
-Station B (5965): Received from station D an acknowledgement
-Station B (5965): Sent to station D >Thanks for your acknowldgement<
-Station D (5967): Received from station B >Thanks for your acknowldgement<
-Station A (5964): Received from station D >Message b<
+Station A (1835): Sent to station C >Hello station C<
+Station B (1836): Sent to station D >Hello station D, it's me station B<
+Station C (1837): Sent to station A >Message 1<
+Station D (1838): Sent to station A >Message a <
+Station C (1837): Received from station A >Hello station C<
+Station A (1835): Received from station C >Message 1<
+Station A (1835): Received from station C an acknowledgement
+Station A (1835): Sent to station C >Received your acknowledgement to first message<
+Station A (1835): Received from station D >Message a <
+Station D (1838): Received from station B >Hello station D, it's me station B<
+Station C (1837): Received from station A an acknowledgement
+Station C (1837): Sent to station A >Message 2<
+Station C (1837): Received from station A >Received your acknowledgement to first message< 
+Station D (1838): Received from station A an acknowledgement
+Station D (1838): Sent to station A >Message b<
+Station B (1836): Received from station D an acknowledgement
+Station B (1836): Sent to station D >Thanks for your acknowledgement<
+Station D (1838): Received from station B >Thanks for your acknowledgement< 
+Station A (1835): Received from station C >Message 2<
+Station A (1835): Received from station C an acknowledgement
+Station A (1835): Sent to station C >Have a good day - see you next time<
+Station A (1835): Received from station D >Message b<
+Station B (1836): Received from station D an acknowledgement
+Station B (1836): Sent to station D >Got to go - see you later<
+Station C (1837): Received from station A an acknowledgement
+Station C (1837): Sent to station A >Message 3<
+Station C (1837): Received from station A >Have a good day - see you next time< 
+Station D (1838): Received from station A an acknowledgement
+Station D (1838): Sent to station A >Message c<
+Station A (1835): Received from station C >Message 3<
+Station A (1835): Received from station C an acknowledgement
+Station D (1838): Received from station B >Got to go - see you later<
+Station B (1836): Received from station D an acknowledgement
+Station C (1837): Received from station A an acknowledgement
+Station C (1837): Sent to station A >Message 4<
+Station A (1835): Received from station D >Message c<
+Station A (1835): Received from station C >Message 4<
+Station C (1837): Received from station A an acknowledgement
+Station C (1837): Sent to station A >Message 5<
+Station D (1838): Received from station A an acknowledgement
+Station D (1838): Sent to station A >Message d<
+Station A (1835): Received from station C >Message 5<
+Station C (1837): Received from station A an acknowledgement
+Station A (1835): Received from station D >Message d<
+Station D (1838): Received from station A an acknowledgement
+Station D (1838): Sent to station A >Message e<
+Station A (1835): Received from station D >Message e<
+Station D (1838): Received from station A an acknowledgement

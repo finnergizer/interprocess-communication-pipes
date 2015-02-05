@@ -1,0 +1,44 @@
+Station C (30175): Received from station A >Hello station C<
+Station D (30177): Received from station B >Hello station D, it's me station B<
+Station A (30172): Received from station C >Message 1<
+Station A (30172): Received from station D >Message a <
+Station C (30175): Received from station A an acknowledgement
+Station C (30175): Sent to station A >Message 2<
+Station B (30174): Received from station D an acknowledgement
+Station B (30174): Sent to station D >Thanks for your acknowldgement<
+Station A (30172): Received from station C an acknowledgement
+Station D (30177): Received from station A an acknowledgement
+Station A (30172): Sent to station C >Received your acknowledgement to first message<
+Station D (30177): Sent to station A >Message b<
+Station A (30172): Received from station C >Message 2<
+Station A (30172): Received from station D >Message b<
+Station C (30175): Received from station A >Received your acknowledgement to first message<
+Station C (30175): Received from station A an acknowledgement
+Station C (30175): Sent to station A >Message 3<
+Station D (30177): Received from station B >Thanks for your acknowldgement<
+Station A (30172): Received from station C an acknowledgement
+Station A (30172): Sent to station C >Have a good day - see you next time<
+Station D (30177): Received from station A an acknowledgement
+Station D (30177): Sent to station A >Message c<
+Station A (30172): Received from station C >Message 3<
+Station B (30174): Received from station D an acknowledgement
+Station A (30172): Received from station D >Message c<
+Station B (30174): Sent to station D >Got to go - see you later<
+Station D (30177): Received from station B >Got to go - see you later<
+Station B (30174): Received from station D an acknowledgement
+Station C (30175): Received from station A >Have a good day - see you next time<
+Station C (30175): Received from station A an acknowledgement
+Station C (30175): Sent to station A >Message 4<
+Station A (30172): Received from station C an acknowledgement
+Station A (30172): Received from station C >Message 4<
+Station C (30175): Received from station A an acknowledgement
+Station C (30175): Sent to station A >Message 5<
+Station A (30172): Received from station C >Message 5<
+Station C (30175): Received from station A an acknowledgement
+Station D (30177): Received from station A an acknowledgement
+Station D (30177): Sent to station A >Message d<
+Station A (30172): Received from station D >Message d<
+Station D (30177): Received from station A an acknowledgement
+Station D (30177): Sent to station A >Message e<
+Station A (30172): Received from station D >Message e<
+Station D (30177): Received from station A an acknowledgement

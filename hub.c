@@ -17,7 +17,6 @@ Description:  This program creates the station processes
 #define OK 1
 #define PROGRAM_STN "stn"  // The program that acts like a station
 #define MAX_STNS 10        // Maximum number of stations
-#define BUFSIZE 100
 // Note that the terms reception and transmission are relatif to the station and not the hub
 // Note that the descriptors at the same index in the two arrays are related to the same station,
 // for example, fdsRec[2] and fdsTran[2] contain the fds of the pipes connected to the same station.
@@ -121,6 +120,11 @@ void createStation(char *fileConfig)
 		dup2(recPipeFds[0], 0);
 		close(recPipeFds[1]);
 		close(recPipeFds[0]);
+        int c;
+        for (c=0; c<pipeCounter; c++){
+                close(fdsRec[c]);
+                close(fdsTran[c]);
+        }
 		int i = execlp("/Users/shaughnfinnerty/Documents/school/csi3131/assignments/a1/stn", PROGRAM_STN, fileConfig, NULL);
 		//i will only be assigned a value if this call fails (i.e. -1)
 		printf("%d\n", i);
@@ -130,8 +134,8 @@ void createStation(char *fileConfig)
 		// dup2(fdsTran[pipeCounter], tranPipeFds[0]);
 		fdsTran[pipeCounter] = tranPipeFds[0];
 		//IS THIS NECESSARY???
-		// close(tranPipeFds[1]);
-		// close(tranPipeFds[0]);
+		close(tranPipeFds[1]);
+		//close(tranPipeFds[0]);
 		// tranPipeFds[1] = -1;
 		// tranPipeFds[0] = -1;
 		//store write end of rec pipe [1] in fdsRec(at its end)
@@ -139,11 +143,14 @@ void createStation(char *fileConfig)
 		// dup2(fdsRec[pipeCounter], recPipeFds[1]);
 		fdsRec[pipeCounter] = recPipeFds[1];
 		//IS THIS NECESSARY???
-		// close(recPipeFds[0]);
+		close(recPipeFds[0]);
 		// close(recPipeFds[1]);
 		// recPipeFds[0] = -1;
 		// recPipeFds[1] = -1;
 		pipeCounter = pipeCounter + 1;
+		fdsRec[pipeCounter] = -1;
+		fdsTran[pipeCounter] = -1;
+		
 		fprintf(stderr, "Initialized pipes for stn %d\n", pipeCounter);
 		// wait(NULL);
 		//Debugging
@@ -170,12 +177,13 @@ void createHubThreads()
 	pthread_attr_t attr;
 
 	// pthread_init_attr(&attr);
-	for (int i = 0; i<pipeCounter; i++){
+	for (int i = pipeCounter-1; i>=0; i--){
 		// pthread_create(&tid[i], &attr, listenTran, &fdsTran[i]);
 		pthread_create(&tid[i], NULL, listenTran, &fdsTran[i]);
 	}
-	// for(int i=0; i<6; i++) /* now wait until everybody finishes */
-	// 	pthread_join(tid[i], NULL);
+	// pthread_create(&tid[0], NULL, listenTran, &fdsTran[0]);
+	for(int i=0; i<6; i++) /* now wait until everybody finishes */
+		pthread_join(tid[i], NULL);
 	//
 	sleep(30);
 	for (int i=0; i<pipeCounter; i++){
@@ -202,7 +210,7 @@ void *listenTran(void *fdListenPtr)
    int num;                                // value returned by read (num of bytes read)
    char buffer[BUFSIZ];                    // buffer for reading data
    int i;
-  
+ 
    while(1)  // a loop
    {
      num = read(fdListen,buffer,BUFSIZ-1);
@@ -215,6 +223,7 @@ void *listenTran(void *fdListenPtr)
      else if(num == 0) /* other end of pipe closed - should not happen */
      {
 	sprintf(buffer,"Pipe closed (%d)\n",getpid());
+	fprintf(stderr, "fdListen: %d", fdListen);
         write(2,buffer,strlen(buffer)); 	// write to standard error
 	break;  				/* break the loop */
      }
@@ -227,7 +236,7 @@ void *listenTran(void *fdListenPtr)
           if(fdsTran[i]!=fdListen) 
           {
                // Following line can be used for debugging
-               //printf("hub: transmitting frame to %d >%s<\n",fdsRec[i],buffer);
+		//	  printf("hub: transmitting frame to %d >%s<\n",fdsRec[i],buffer);
 	       write(fdsRec[i],buffer,strlen(buffer));
           }
      }
