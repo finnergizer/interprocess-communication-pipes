@@ -16,8 +16,6 @@ receives a messages, it reponds by returning an acknowledgement.
 -------------------------------------------------------------*/
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
 
 // Some definitions
 #define MSGS_MAX 10 // Maximum number of messages
@@ -38,7 +36,6 @@ receives a messages, it reponds by returning an acknowledgement.
 #define MSG_ACK 2
 #define MSG_EMPTY 3
 #define MSG_RECV 4
-
 
 // Prototypes
 void readFile(FILE *, char *, char *, char *[], char *);
@@ -65,8 +62,7 @@ int main(int ac, char **av)
    char *messages[MSGS_MAX+1];  // array of pointers to messages - terminated with NULL
    char msgsBuffer[BUFSIZ];     // buffer of messages
    FILE *fp;
-   
-   
+
    if(ac != 2)
    {
        fprintf(stderr,"Usage: stn <fileName>\n");
