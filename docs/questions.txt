@@ -1,3 +1,0 @@
-Why do I have to include string.h and stdlib.h? Because I am using Mac??
-
-How should I keep track of the last fds index in the two arrays? global variable? use -1 to indicate empty at last position?
